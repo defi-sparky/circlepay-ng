@@ -1,5 +1,5 @@
 "use client";
-// app/revenue/page.tsx
+
 // Internal revenue dashboard — shows all collected fees
 // Access at: http://localhost:3000/revenue 
 // Protect this route with a password or remove on mainnet.
