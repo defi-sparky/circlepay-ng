@@ -1,14 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-
   compress: true,
-
-  // Silence the turbopack/webpack conflict warning on Vercel
   turbopack: {},
 
-  // Skip type and lint checks during Vercel build for clean deploys
-  // Run locally: npx tsc --noEmit
   typescript: {
     ignoreBuildErrors: true,
   },
