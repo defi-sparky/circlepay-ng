@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #07090F;
+    color: #E8EDF5;
+    min-height: 100dvh;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0E1118;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1E2433;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #252D3D;
+  }
+
+  /* Remove number input arrows */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer components {
+  /* Glass card effect */
+  .glass-card {
+    @apply bg-brand-card border border-brand-border rounded-2xl;
+    background: linear-gradient(135deg, rgba(20,24,32,0.9) 0%, rgba(14,17,24,0.95) 100%);
+    backdrop-filter: blur(12px);
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply bg-brand-green text-brand-bg font-display font-semibold rounded-xl px-6 py-3.5 
+           transition-all duration-200 hover:bg-brand-green-dim active:scale-[0.98]
+           disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100;
+  }
+
+  /* Secondary button */
+  .btn-secondary {
+    @apply bg-brand-muted text-brand-text font-display font-medium rounded-xl px-6 py-3.5 
+           border border-brand-border transition-all duration-200 
+           hover:border-brand-green/30 hover:bg-brand-muted/80
+           active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  /* Input field */
+  .input-field {
+    @apply w-full bg-brand-surface border border-brand-border rounded-xl px-4 py-3
+           text-brand-text placeholder-brand-text-muted font-body
+           focus:outline-none focus:border-brand-green/50 focus:ring-1 focus:ring-brand-green/20
+           transition-all duration-200;
+  }
+
+  /* Network badge */
+  .network-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium
+           bg-brand-muted border border-brand-border;
+  }
+
+  /* Status dot */
+  .status-dot {
+    @apply w-2 h-2 rounded-full;
+  }
+
+  /* Shimmer loading */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(30, 36, 51, 0) 0%,
+      rgba(30, 36, 51, 0.5) 50%,
+      rgba(30, 36, 51, 0) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* Amount display */
+  .amount-display {
+    @apply font-display text-4xl font-bold text-brand-text tracking-tight;
+  }
+
+  /* Section header */
+  .section-header {
+    @apply font-display text-xl font-semibold text-brand-text mb-4;
+  }
+
+  /* Tab underline */
+  .tab-active {
+    @apply border-b-2 border-brand-green text-brand-green;
+  }
+}
+
+@layer utilities {
+  /* Gradient text */
+  .text-gradient-green {
+    background: linear-gradient(135deg, #00E87A, #00C468);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #F5A623, #E8941A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Green glow */
+  .glow-green {
+    box-shadow: 0 0 30px rgba(0, 232, 122, 0.25), 0 0 0 1px rgba(0, 232, 122, 0.1);
+  }
+
+  /* Safe bottom padding for mobile */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+  }
+
+  /* Neon border */
+  .border-glow-green {
+    border-color: rgba(0, 232, 122, 0.4);
+    box-shadow: 0 0 10px rgba(0, 232, 122, 0.1);
+  }
+}
+
+/* RainbowKit custom theme overrides */
+[data-rk] {
+  --rk-colors-accentColor: #00E87A !important;
+  --rk-colors-accentColorForeground: #07090F !important;
+  --rk-colors-modalBackground: #0E1118 !important;
+  --rk-colors-modalBorder: #1E2433 !important;
+  --rk-colors-modalText: #E8EDF5 !important;
+  --rk-colors-modalTextSecondary: #6B7A99 !important;
+  --rk-colors-menuItemBackground: #141820 !important;
+  --rk-colors-closeButton: #6B7A99 !important;
+  --rk-colors-closeButtonBackground: #141820 !important;
+  --rk-colors-connectButtonBackground: #00E87A !important;
+  --rk-colors-connectButtonText: #07090F !important;
+  --rk-fonts-body: 'DM Sans', sans-serif !important;
+  --rk-radii-modal: 16px !important;
+  --rk-radii-menuButton: 12px !important;
+  --rk-radii-connectButton: 12px !important;
+}
+
+/* Page transitions */
+.page-enter {
+  animation: slide-up 0.35s ease-out;
+}
+
+/* Toast customization */
+.react-hot-toast {
+  background: #141820 !important;
+  color: #E8EDF5 !important;
+  border: 1px solid #1E2433 !important;
+}
