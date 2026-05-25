@@ -1,4 +1,4 @@
-# CirclePay NG 🇳🇬⚡
+# CirclePay NG
 
 **Pay Nigerian utility bills with USDC on Arc Testnet. No P2P wahala, no CEX stress.**
 
