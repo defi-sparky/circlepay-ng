@@ -18,7 +18,7 @@ interface IERC20 {
     function approve(address spender, uint256 amount) external returns (bool);
 }
 
-contract CirclePayStaking {
+contract ArcPayStaking {
     // ─── State ───────────────────────────────────────────────────────────────
 
     IERC20 public immutable usdc;

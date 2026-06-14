@@ -3,10 +3,8 @@ import type { Metadata } from "next";
 import { Syne, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
+import { ThemeProvider } from "@/lib/theme";
 
-// ── Self-hosted via next/font — zero external network request ─────────────────
-// Fonts are downloaded at build time, served from your own domain.
-// This eliminates the Google Fonts round-trip that was slowing down load.
 const syne = Syne({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
@@ -28,7 +26,7 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
   variable: "--font-jetbrains",
   display: "swap",
-  preload: false, // mono font — not critical path
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -55,12 +53,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    // No hardcoded "dark" class — ThemeProvider manages it dynamically
     <html
       lang="en"
-      className={`dark ${syne.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
+      className={`${syne.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="bg-brand-bg text-brand-text font-body antialiased">
-        <Providers>{children}</Providers>
+      <body className="bg-[var(--bg)] text-[var(--text)] font-body antialiased">
+        <ThemeProvider>
+          <Providers>{children}</Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

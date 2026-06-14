@@ -10,7 +10,7 @@ pragma solidity ^0.8.24;
  *
  * Flow:
  *   1. User approves this contract to spend USDC
- *   2. User calls payForService(amount, serviceId, reference)
+ *   2. User calls payForService(amount, serviceId, txReference)
  *   3. Contract emits ServicePaid event with all details
  *   4. CirclePay backend picks up event → calls VTpass API → delivers service
  *   5. If delivery fails, admin can issue refund via refundPayment()
@@ -22,7 +22,7 @@ interface IERC20 {
     function balanceOf(address account) external view returns (uint256);
 }
 
-contract CirclePayPayment {
+contract ArcPayPayment {
     // ─── State ───────────────────────────────────────────────────────────────
 
     IERC20 public immutable usdc;
@@ -45,7 +45,7 @@ contract CirclePayPayment {
         uint256 amount;
         uint256 fee;
         bytes32 serviceId;
-        string  reference;
+        string  txReference;
         uint256 timestamp;
         PaymentStatus status;
     }
@@ -59,7 +59,7 @@ contract CirclePayPayment {
         uint256 amount,
         uint256 fee,
         bytes32 indexed serviceId,
-        string reference,
+        string txReference,
         bytes32 paymentId
     );
 
@@ -99,23 +99,23 @@ contract CirclePayPayment {
      * @notice Pay for a utility service with USDC
      * @param amount       USDC amount (6 decimals, e.g. 1_000_000 = 1 USDC)
      * @param serviceId    Bytes32 identifier for the service type (e.g. keccak("airtime-mtn"))
-     * @param reference    Unique human-readable reference from the app (e.g. "ARC1234ABCD")
+     * @param txReference    Unique human-readable txReference from the app (e.g. "ARC1234ABCD")
      * @return paymentId   Unique on-chain payment ID
      */
     function payForService(
         uint256 amount,
         bytes32 serviceId,
-        string calldata reference
+        string calldata txReference
     ) external returns (bytes32 paymentId) {
         require(amount >= minPayment, "CirclePayPayment: below minimum payment");
-        require(bytes(reference).length > 0, "CirclePayPayment: empty reference");
+        require(bytes(txReference).length > 0, "CirclePayPayment: empty txReference");
 
         // Compute deterministic payment ID
         paymentId = keccak256(
-            abi.encodePacked(msg.sender, reference, block.timestamp, amount)
+            abi.encodePacked(msg.sender, txReference, block.timestamp, amount)
         );
 
-        // Prevent duplicate references
+        // Prevent duplicate txReferences
         require(
             payments[paymentId] == PaymentStatus.None,
             "CirclePayPayment: duplicate payment"
@@ -144,12 +144,12 @@ contract CirclePayPayment {
             amount:    amount,
             fee:       fee,
             serviceId: serviceId,
-            reference: reference,
+            txReference: txReference,
             timestamp: block.timestamp,
             status:    PaymentStatus.Pending
         });
 
-        emit ServicePaid(msg.sender, amount, fee, serviceId, reference, paymentId);
+        emit ServicePaid(msg.sender, amount, fee, serviceId, txReference, paymentId);
         return paymentId;
     }
 
