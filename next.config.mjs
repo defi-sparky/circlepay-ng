@@ -16,14 +16,19 @@ const nextConfig = {
   },
 
   webpack: (config, { dev }) => {
+    // Suppress wagmi/viem peer dep warnings
     config.externals.push("pino-pretty", "lokijs", "encoding");
-    
-    config.resolve.alias = {
-      ...config.resolve.alias,
+
+    // Fix MetaMask SDK importing React Native modules in browser builds
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
       "@react-native-async-storage/async-storage": false,
+    };
+
     if (!dev) {
       config.optimization.minimize = true;
     }
+
     return config;
   },
 
@@ -31,11 +36,15 @@ const nextConfig = {
     return [
       {
         source: "/logo.png",
-        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
       },
       {
         source: "/favicon.png",
-        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
       },
     ];
   },
