@@ -6,7 +6,7 @@ import { persist } from "zustand/middleware";
 
 export interface Transaction {
   id: string;
-  type: "send" | "receive" | "payment" | "stake" | "unstake" | "claim";
+  type: "send" | "receive" | "payment" | "stake" | "unstake" | "claim" | "bridge";
   amount: string;        // principal USDC amount
   usdcFee?: string;      // platform fee collected (USDC)
   gasFee?: string;       // network gas fee (USDC)

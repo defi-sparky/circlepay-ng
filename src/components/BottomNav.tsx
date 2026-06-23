@@ -1,17 +1,17 @@
 "use client";
 // components/BottomNav.tsx
-// Mobile-first bottom navigation bar
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Wallet, Zap, TrendingUp, ArrowLeftRight } from "lucide-react";
+import { Wallet, Zap, TrendingUp, ArrowLeftRight, GitMerge } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { href: "/wallet", label: "Wallet", icon: Wallet },
-  { href: "/pay", label: "Pay Bills", icon: Zap },
-  { href: "/stake", label: "Earn", icon: TrendingUp },
-  { href: "/convert", label: "Convert", icon: ArrowLeftRight },
+  { href: "/wallet",  label: "Wallet",   icon: Wallet },
+  { href: "/pay",     label: "Pay Bills", icon: Zap },
+  { href: "/bridge",  label: "Bridge",    icon: GitMerge },
+  { href: "/stake",   label: "Earn",      icon: TrendingUp },
+  { href: "/convert", label: "Convert",   icon: ArrowLeftRight },
 ];
 
 export function BottomNav() {
@@ -28,13 +28,15 @@ export function BottomNav() {
               key={href}
               href={href}
               className={cn(
-                "flex-1 flex flex-col items-center gap-1 py-3 px-2 transition-all duration-200",
-                isActive ? "text-brand-green" : "text-brand-text-muted hover:text-brand-text"
+                "flex-1 flex flex-col items-center gap-1 py-3 px-1 transition-all duration-200",
+                isActive
+                  ? "text-brand-green"
+                  : "text-brand-text-muted hover:text-brand-text"
               )}
             >
               <div className="relative">
                 <Icon
-                  size={22}
+                  size={20}
                   strokeWidth={isActive ? 2.5 : 1.8}
                   className={cn(
                     "transition-transform duration-200",
@@ -47,7 +49,7 @@ export function BottomNav() {
               </div>
               <span
                 className={cn(
-                  "text-[10px] font-medium tracking-wide transition-all duration-200",
+                  "text-[9px] font-medium tracking-wide leading-tight",
                   isActive ? "font-semibold" : ""
                 )}
               >

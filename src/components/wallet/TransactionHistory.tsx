@@ -4,7 +4,7 @@
 import { useAppStore } from "@/lib/store";
 import { arcTestnet } from "@/lib/wagmi";
 import { formatDistanceToNow } from "date-fns";
-import { ExternalLink, Send, Download, Zap, TrendingUp, TrendingDown, Gift } from "lucide-react";
+import { ExternalLink, Send, Download, Zap, TrendingUp, TrendingDown, Gift, GitMerge } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const typeConfig = {
@@ -14,6 +14,7 @@ const typeConfig = {
   stake: { icon: TrendingUp, label: "Staked", color: "text-brand-blue", bg: "bg-brand-blue/10" },
   unstake: { icon: TrendingDown, label: "Unstaked", color: "text-orange-400", bg: "bg-orange-400/10" },
   claim: { icon: Gift, label: "Rewards", color: "text-brand-green", bg: "bg-brand-green/10" },
+  bridge: { icon: GitMerge, label: "Bridge", color: "text-brand-blue", bg: "bg-brand-blue/10" },
 };
 
 const statusConfig = {
@@ -42,7 +43,7 @@ export function TransactionHistory() {
   return (
     <div className="space-y-2">
       {transactions.map((tx) => {
-        const config = typeConfig[tx.type];
+        const config = typeConfig[tx.type] ?? typeConfig.payment;
         const statusCfg = statusConfig[tx.status];
         const Icon = config.icon;
         const explorerUrl = tx.txHash
@@ -80,7 +81,7 @@ export function TransactionHistory() {
             {/* Amount + link */}
             <div className="flex flex-col items-end gap-1">
               <span className={cn("text-sm font-semibold font-display", config.color)}>
-                {tx.type === "receive" || tx.type === "claim" ? "+" : "-"}
+                {tx.type === "receive" || tx.type === "claim" || tx.type === "bridge" ? "+" : "-"}
                 {tx.amount} USDC
               </span>
               {explorerUrl && (
